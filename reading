@@ -1,0 +1,133 @@
+>To create a server we need to import the 'http' module
+provided by nodejs, then we can create a server listeneing on some port.
+
+>We can use the variables and functions declared in other files
+by exporting them through the "module" object object provided by nodejs.
+
+>for that we need to export them in the file where they are defined.
+
+inside of mod1.js 
+Ex: var myName = "xyz";
+module.exports.myName = myName; -->
+					we write this statement to make it available
+					in other files.
+
+	var myFunc = function(){
+		console.log("function in mod1");
+	}				
+
+	module.exports.myFunc = myFunc;
+
+and in other files, to use that varibale inside of mod1.js
+first we need to require them
+	var mod1 = require('./mod1');
+
+	res.write(mod1.myName);--> if it's displaying a variable
+
+	mod1.func1()--> if it's calling a fucntion from mod1
+
+But this process of exporting all the varibales gets difficult. So
+we declare all the functions or varibales inside of an object called "module.exports"
+
+	in mod2.js
+	module.exports = {
+		myName: "name here",
+		func1: function(){
+			console.log("function inside of mod1");
+		}
+	}						
+
+	then in our server.js file
+	we can require this
+	var mod2 = require('./mod2');
+
+	res.write(mod2.myName);
+
+	mod2.func1();
+
+We can also render a html file on to our server, by requiring module called "file system"
+named as "fs" as shown below.	
+
+	var fs = require('fs');
+
+	fs.readFile('./index.html', null, function(err, data){
+		if(err){
+			res.writeHead(404);
+			res.write('file not found');
+		}else{
+			res.write(data);
+			res.end(); -->MAKE SURE TO END THE RESPONSE INSIDE OF THIS
+							CALL BACK FUNCTION, ELSE THE REQ WLL END
+							BEFORE ACTUALLY RENDERING THIS INDEX PAGE.
+		}
+	});
+BUT THIS HERE WILL RENDER THE ENTIRE CODE WE HAVE WRITTEN IN INDEX.
+In order to render that as a page with the content inside of it
+we need to change the Content-Type value to 'text/html'
+
+res.writeHead(200, {'Content-Type' : 'text/html'});
+inside of our handleReq function.	
+
+NODE WITH EXPRESS
+>We can have the pre generated express app to faslty write the
+code. This can be done by 
+			i. Frist install express-generator globally
+					npm install -g express-generator
+			ii. Then inside of the directory where you want to
+			create a "folder" of your project run
+				express foldername
+			Now it will create a folder called "foldername"
+			and inside of it we can find many other folders and files
+			that are required to run the express app.
+
+			Then to run the app, first install all the dependencies
+			which are already present inside of package.json
+			by running "npm install" inside of your folder "foldername".
+
+		NOTE: When we already have package.json file with the dependencies
+		included, then inorder to use those we need to run "npm install"
+		then it will download node_modules folder with all those packages inside 
+		of package.json.
+
+		If you don't have any of the packages defined inside of package.json
+		then, when you run "npm install" it just gives you a folder named 
+		"node_modules" without anything in it, that will be empty, because you don't have
+		any modules or packages defined yet.
+
+
+EXPRESS VALIDATION
+1. You need to install session and validation first
+		>run npm install --save express-validator
+		>run npm install --save express-session
+
+2. Require them at the beginning in app.js
+
+3. now include the validation
+	app.use(expressValidation()); -->this statement only after body parser
+	because we need to validate our form after the values are being parsed.
+
+4. then app.use(expressSession({secret:'mad', saveUninitialized: false, resave: false}));
+
+the --saveUninitialized: false means without a form value being initialized, it will not
+be saved.
+--resave is also the same 
+	
+	req.session.errors --> contians array of objects as shown below.
+
+		[ { param: 'email', msg: 'email invalid', value: '' },
+  		{ param: 'password', msg: 'password not matched', value: '' } ]		
+
+
+  	START THE SERVER
+  	>Inside of bin folder
+  	>net start MongoDB 
+  	>mongo (if the service started successfully)
+  	>mongod.exe --config="C:\mongo.config" (if error after running mongo step)	
+  	Now the server should be on
+
+  	in another cmd.exe
+  	>inside of bin folder, run ->mongo
+  	>it should show connecting to test
+  	>then run ->db	
+  	>it shows test
+  	>use employees (even for this you used the same employees database, but myusers as collection)		

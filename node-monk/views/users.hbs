@@ -1,0 +1,42 @@
+<h3>All the Users here</h3>
+<section>
+{{#each getUsers}}
+	<p><strong>Name: </strong>{{this.username}}</p>
+	<p><strong>Age: </strong>{{this.age}}</p>
+	<p><strong>Hobby: </strong>{{this.hobby}}</p>
+	<p><strong>ID: </strong>{{this._id}}</p>
+{{/each}}	
+
+</section>
+<hr>
+
+<h4>Create User</h4>
+<form method="post" action="/users/create">
+	Username:
+	<input type="text" name="username"><br>
+	Age:
+	<input type="text" name="age"><br>
+	Hobby:
+	<input type="text" name="hobby"><br>
+	<button type="submit">Create</button>
+</form>
+
+<h4>Update User</h4>
+<form method="post" action="/users/update">
+	Username:
+	<input type="text" name="username"><br>
+	Age:
+	<input type="text" name="age"><br>
+	Hobby:
+	<input type="text" name="hobby"><br>
+	ID:
+	<input type="text" name="id"><br>
+	<button type="submit">Update</button>
+</form>
+
+<h4>Delete User</h4>
+<form method="post" action="/users/delete">
+	ID:
+	<input type="text" name="id"><br>
+	<button type="submit">Delete</button>
+</form>

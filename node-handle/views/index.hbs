@@ -1,0 +1,46 @@
+<h1>Main page</h1>
+<h3>{{title}}</h3>
+
+{{# if myVal}}
+<p>render this p</p>
+{{else}}
+<p>donot render this p</p>
+{{/if}}
+
+{{# each myarr as |val key|}}
+<li>{{key}}: {{val}}</li>
+{{/each}}
+
+<form method="post" action="/test/submit">
+	Id: <br>
+	<input type="text" name="id"><br>
+	<button type="submit">Submit</button>
+</form><br><hr>
+
+
+{{#if myVal}}
+<p>Successful validation</p>
+{{else}}
+	{{#if errors}}
+		<ul>
+			{{# each errors}}
+				<li>{{this.msg}}</li>
+				<li>testing errors {{this}}</li>
+			{{/each}}	
+		</ul>
+
+		
+		<p>Errors here {{errors}}</p>
+	{{/if}}
+
+<form method="post" action="/test/login">
+    Email<br>
+    <input type="email" name="email"><br>
+    Password<br>
+    <input type="password" name="password"><br>
+    Confirm Password<br>
+    <input type="password" name="confirmPassword"><br>
+  <button type="submit">Submit</button>
+</form>
+{{/if}}
+
